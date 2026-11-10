@@ -1,334 +1,55 @@
 
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#07111f">
-<title>PS4 CustomHEN 1.2</title>
+<div class="goldhen-panel">
+  <h2>GOLDHEN</h2>
+  <p>PS4 Firmware 13.52</p>
+
+  <button id="startGoldHEN">
+    ⚡ INICIAR GOLDHEN
+  </button>
+
+  <p id="goldhenStatus">Estado: pronto</p>
+</div>
 
 <style>
-:root {
-  --bg:#07111f;
-  --panel:#101f33;
-  --blue:#168cff;
-  --cyan:#38d5ff;
-  --muted:#91a9c2;
-  --border:#203c5a;
+.goldhen-panel {
+  background: #111d32;
+  border: 1px solid #168cff;
+  border-radius: 15px;
+  padding: 22px;
+  text-align: center;
+  color: white;
+  max-width: 450px;
+  margin: 20px auto;
 }
-*{box-sizing:border-box}
-body{
-  margin:0;background:radial-gradient(circle at top,#153e68,var(--bg) 65%);
-  color:white;font-family:Arial,sans-serif;min-height:100vh
+
+#startGoldHEN {
+  background: #087bea;
+  color: white;
+  border: 0;
+  border-radius: 10px;
+  padding: 16px;
+  width: 100%;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
 }
-button{font:inherit;cursor:pointer}
-.layout{display:flex;min-height:100vh}
-.sidebar{
-  width:225px;background:#07111fee;border-right:1px solid var(--border);
-  padding:25px 15px;flex-shrink:0
+
+#goldhenStatus {
+  color: #69bdff;
+  margin-top: 15px;
 }
-.logo{font-size:22px;font-weight:bold;color:var(--cyan);padding:8px}
-.logo small{display:block;color:var(--muted);font-size:10px;letter-spacing:3px;margin-top:7px}
-.menu-label{color:#66819d;font-size:10px;letter-spacing:2px;margin:35px 10px 12px}
-.nav button{
-  width:100%;display:block;text-align:left;padding:13px;margin:5px 0;
-  border:1px solid transparent;border-radius:9px;background:none;color:#a9bfd7
-}
-.nav button.active,.nav button:hover{
-  background:#12365b;border-color:#267ac0;color:white
-}
-.sidebar-foot{margin:35px 9px;color:#66819d;font-size:11px;line-height:1.8}
-main{flex:1;min-width:0;max-width:1250px;margin:auto;padding:30px}
-.top{
-  display:flex;justify-content:space-between;align-items:center;
-  gap:15px;margin-bottom:25px
-}
-.top h1{font-size:25px;margin:0}
-.top p{font-size:13px;color:var(--muted)}
-.badge{
-  padding:9px 13px;border:1px solid #277ac0;border-radius:30px;
-  color:#69caff;background:#103353;font-size:12px
-}
-.hero{
-  padding:28px;border:1px solid #277ac0;border-radius:16px;
-  background:linear-gradient(115deg,#124777,#10233b 70%);
-  margin-bottom:18px
-}
-.hero h2{font-size:26px;margin:0 0 10px}
-.hero p{color:#b4cce4;line-height:1.6;font-size:14px;max-width:540px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:17px 0}
-.card{
-  background:var(--panel);border:1px solid var(--border);
-  padding:19px;border-radius:13px;min-width:0
-}
-.card h3{font-size:12px;color:var(--muted);font-weight:normal;margin:0 0 13px}
-.value{font-size:19px;font-weight:bold;overflow-wrap:anywhere}
-.note{font-size:11px;color:#7793b0;margin-top:8px}
-.section{display:none}
-.section.active{display:block}
-.section-title{font-size:19px;margin:5px 0 18px}
-.line{
-  display:flex;justify-content:space-between;gap:12px;
-  padding:14px 0;border-bottom:1px solid var(--border);font-size:13px
-}
-.line:last-child{border:0}
-.result{color:#69caff;text-align:right}
-.btn{
-  display:block;width:100%;padding:14px;margin-top:12px;
-  border:0;border-radius:9px;background:linear-gradient(90deg,#0879df,#13a9ed);
-  color:white;font-weight:bold
-}
-.btn.alt{background:#203b59;border:1px solid #345776}
-.btn:disabled{opacity:.6;cursor:wait}
-.log{
-  background:#030a13;border:1px solid var(--border);border-radius:9px;
-  padding:14px;min-height:130px;max-height:280px;overflow:auto;
-  color:#a8d5ff;font-size:12px;line-height:1.8;overflow-wrap:anywhere
-}
-.notice{color:#93abc3;font-size:12px;line-height:1.7;margin-top:15px}
-footer{text-align:center;color:#66819d;font-size:11px;margin:30px 0 5px}
-@media(max-width:750px){
- .layout{display:block}
- .sidebar{width:100%;padding:12px;border-right:0;border-bottom:1px solid var(--border)}
- .menu-label,.sidebar-foot{display:none}
- .nav{display:flex;overflow-x:auto;gap:5px}
- .nav button{width:auto;white-space:nowrap;font-size:12px;padding:10px}
- main{padding:17px}
- .grid{grid-template-columns:1fr 1fr}
-}
-@media(max-width:420px){.grid{grid-template-columns:1fr}.hero h2{font-size:22px}}
 </style>
-</head>
-
-<body>
-<div class="layout">
-
-<aside class="sidebar">
-  <div class="logo">PS4 CustomHEN<small>ULTRA EDITION</small></div>
-  <div class="menu-label">NAVEGAÇÃO</div>
-  <nav class="nav">
-    <button class="active" data-page="home">⌂ Início</button>
-    <button data-page="diagnostic">◈ Diagnóstico</button>
-    <button data-page="files">▣ Ficheiros</button>
-    <button data-page="history">≡ Histórico</button>
-    <button data-page="about">ⓘ Sobre</button>
-  </nav>
-  <div class="sidebar-foot">CUSTOMHEN 1.2<br>Cloudflare Pages<br>Interface experimental</div>
-</aside>
-
-<main>
-<div class="top">
-  <div>
-    <h1 id="pageTitle">Painel principal</h1>
-    <p>Centro de controlo da PS4</p>
-  </div>
-  <span class="badge">VERSION 1.2</span>
-</div>
-
-<section id="home" class="section active">
-  <div class="hero">
-    <h2>CustomHEN ULTRA</h2>
-    <p>
-      Bem-vindo à versão 1.2. Utiliza o painel para
-      verificar o navegador, a ligação e os ficheiros
-      do teu projeto.
-    </p>
-    <button class="btn" onclick="diagnostic()">INICIAR DIAGNÓSTICO</button>
-  </div>
-
-  <div class="grid">
-    <div class="card">
-      <h3>DISPOSITIVO</h3>
-      <div class="value" id="device">Por verificar</div>
-      <div class="note">Identificação do navegador</div>
-    </div>
-    <div class="card">
-      <h3>INTERNET</h3>
-      <div class="value" id="internet">Por verificar</div>
-      <div class="note">Estado da ligação</div>
-    </div>
-    <div class="card">
-      <h3>GOLDHEN</h3>
-      <div class="value">Não carregado</div>
-      <div class="note">Execução não confirmada</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3>COMPONENTES</h3>
-    <div class="line">Slopkit <span class="result" id="homeSlopkit">Por verificar</span></div>
-    <div class="line">Relapse <span class="result" id="homeRelapse">Por verificar</span></div>
-  </div>
-</section>
-
-<section id="diagnostic" class="section">
-  <div class="card">
-    <h2 class="section-title">Diagnóstico do sistema</h2>
-    <div class="line">Dispositivo <span class="result" id="diagDevice">—</span></div>
-    <div class="line">Navegador <span class="result" id="diagBrowser">—</span></div>
-    <div class="line">Internet <span class="result" id="diagInternet">—</span></div>
-    <div class="line">Firmware <span class="result">Não identificado</span></div>
-    <button class="btn" onclick="diagnostic()">REPETIR DIAGNÓSTICO</button>
-  </div>
-</section>
-
-<section id="files" class="section">
-  <div class="card">
-    <h2 class="section-title">Verificação de ficheiros</h2>
-    <div class="line">Slopkit latest <span class="result" id="slopkit">Por verificar</span></div>
-    <div class="line">Relapse GoldHEN <span class="result" id="relapse">Por verificar</span></div>
-    <button class="btn" onclick="checkFiles()">VERIFICAR FICHEIROS</button>
-    <p class="notice">
-      Esta verificação testa se os caminhos estão acessíveis.
-      Não valida o conteúdo, a compatibilidade ou a segurança dos ficheiros.
-    </p>
-  </div>
-</section>
-
-<section id="history" class="section">
-  <div class="card">
-    <h2 class="section-title">Histórico de operações</h2>
-    <div class="log" id="logs"></div>
-    <button class="btn" onclick="exportLogs()">EXPORTAR RELATÓRIO</button>
-    <button class="btn alt" onclick="clearLogs()">LIMPAR HISTÓRICO</button>
-  </div>
-</section>
-
-<section id="about" class="section">
-  <div class="card">
-    <h2 class="section-title">Sobre CustomHEN</h2>
-    <div class="line">Projeto <span class="result">PS4 CustomHEN</span></div>
-    <div class="line">Versão <span class="result">1.2 ULTRA</span></div>
-    <div class="line">Plataforma <span class="result">Cloudflare Pages</span></div>
-    <div class="line">Firmware-alvo <span class="result">13.52</span></div>
-    <p class="notice">
-      O firmware 13.52 é o alvo declarado, não uma versão
-      detetada automaticamente. Esta interface não executa
-      exploits nem carrega payloads.
-    </p>
-  </div>
-</section>
-
-<footer>PS4 CustomHEN 1.2 • ULTRA EDITION</footer>
-</main>
-</div>
 
 <script>
-const logs = document.getElementById("logs");
+document.getElementById("startGoldHEN")
+.addEventListener("click", function () {
 
-function log(message) {
-  const row = document.createElement("div");
-  row.textContent = new Date().toLocaleTimeString() + " | " + message;
-  logs.appendChild(row);
-  logs.scrollTop = logs.scrollHeight;
-}
+  const status = document.getElementById("goldhenStatus");
 
-const titles = {
-  home:"Painel principal",
-  diagnostic:"Diagnóstico",
-  files:"Verificação de ficheiros",
-  history:"Histórico",
-  about:"Sobre o projeto"
-};
+  status.textContent = "A abrir o Relapse...";
 
-document.querySelectorAll(".nav button").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active"));
-    document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
-    button.classList.add("active");
-    document.getElementById(button.dataset.page).classList.add("active");
-    document.getElementById("pageTitle").textContent = titles[button.dataset.page];
-  });
+  window.location.href =
+    "./relapse/version-selector.html";
+
 });
-
-async function fileExists(path) {
-  try {
-    const response = await fetch(path, {cache:"no-store"});
-    return response.ok;
-  } catch {
-    return false;
-  }
-}
-
-async function checkFiles() {
-  log("A verificar ficheiros do projeto...");
-
-  const slopkit = await fileExists("./slopkit/latest/index");
-  const relapse = await fileExists("./relapse/goldhen/jb");
-
-  const s = slopkit ? "Acessível" : "Não encontrado";
-  const r = relapse ? "Acessível" : "Não encontrado";
-
-  document.getElementById("slopkit").textContent = s;
-  document.getElementById("relapse").textContent = r;
-  document.getElementById("homeSlopkit").textContent = s;
-  document.getElementById("homeRelapse").textContent = r;
-
-  log("Slopkit: " + s);
-  log("Relapse: " + r);
-  log("Verificação terminada.");
-}
-
-async function diagnostic() {
-  log("Diagnóstico iniciado.");
-
-  const device = /PlayStation 4/i.test(navigator.userAgent)
-    ? "PlayStation 4" : "Outro dispositivo";
-
-  const browser = /Chrome/i.test(navigator.userAgent)
-    ? "Chrome" : "Outro navegador";
-
-  const internet = navigator.onLine ? "Ligado" : "Desligado";
-
-  document.getElementById("device").textContent = device;
-  document.getElementById("internet").textContent = internet;
-  document.getElementById("diagDevice").textContent = device;
-  document.getElementById("diagBrowser").textContent = browser;
-  document.getElementById("diagInternet").textContent = internet;
-
-  log("Dispositivo: " + device);
-  log("Navegador: " + browser);
-  log("Internet: " + internet);
-
-  await checkFiles();
-  log("Diagnóstico concluído. Nenhum exploit foi executado.");
-}
-
-function exportLogs() {
-  const content = Array.from(logs.children)
-    .map(item => item.textContent).join("\n");
-
-  const blob = new Blob([content || "Sem registos."], {
-    type:"text/plain;charset=utf-8"
-  });
-
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "customhen-1.2-relatorio.txt";
-  a.click();
-  URL.revokeObjectURL(url);
-  log("Relatório exportado.");
-}
-
-function clearLogs() {
-  logs.textContent = "";
-  log("Histórico limpo.");
-}
-
-window.addEventListener("online", () => {
-  document.getElementById("internet").textContent = "Ligado";
-  document.getElementById("diagInternet").textContent = "Ligado";
-  log("Internet restabelecida.");
-});
-
-window.addEventListener("offline", () => {
-  document.getElementById("internet").textContent = "Desligado";
-  document.getElementById("diagInternet").textContent = "Desligado";
-  log("Internet desligada.");
-});
-
-diagnostic();
 </script>
-</body>
-</html>
